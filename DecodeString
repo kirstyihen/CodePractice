@@ -1,0 +1,25 @@
+class Solution(object):
+    def decodeString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        ##Utilize the stack data type to traverse the string 
+        ##While keeping track of the characters and corresponding repeat counts
+        stack = []
+        current_str = ''
+        counter = 0
+        for char in s:
+            if char.isdigit(): 
+            #If the character is a digit build the number until we find the closing bracket
+                counter = counter * 10 + int(char)
+            elif char == '[':
+                stack.append((current_str, counter))
+                current_str = ''
+                counter = 0
+            elif char == ']':
+                prev_str, repeat_num = stack.pop()
+                current_str = prev_str + current_str * repeat_num
+            else:
+                current_str += char
+        return current_str
